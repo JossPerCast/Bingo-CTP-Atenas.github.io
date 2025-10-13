@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bingo CTP Atenas</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #e8f0fe;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    color: #1e3a8a;
+    margin-bottom: 10px;
+    font-size: 48px;
+  }
+
+  .bingo-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;
+    gap: 30px;
+  }
+
+  /* Letras BINGO */
+  .letters {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: bold;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  }
+
+  .b { background-color: #1e3a8a; }
+  .i { background-color: #dc2626; }
+  .n { background-color: #6b7280; }
+  .g { background-color: #6d28d9; }
+  .o { background-color: #facc15; color: black; }
+
+  /* Tablero */
+  #bingo-board {
+    display: grid;
+    grid-template-columns: repeat(15, 70px);
+    gap: 6px;
+    justify-content: center;
+  }
+
+  .number {
+    width: 70px;
+    height: 70px;
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 22px;
+    border: 3px solid #1e40af;
+    transition: 0.2s;
+  }
+
+  .number:hover {
+    background-color: #bfdbfe;
+  }
+
+  .marked {
+    background-color: #ef4444;
+    color: white;
+    transform: scale(1.05);
+  }
+
+  #selected {
+    font-size: 32px;
+    margin-top: 20px;
+    color: #2563eb;
+    font-weight: bold;
+  }
+
+  #reset-btn {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 25px;
+    font-size: 20px;
+    transition: 0.3s;
+  }
+
+  #reset-btn:hover {
+    background-color: #1d4ed8;
+  }
+</style>
+</head>
+<body>
+  <h1>Bingo CTP Atenas</h1>
+
+  <div id="selected">Número actual: --</div>
+
+  <div class="bingo-container">
+    <div class="letters">
+      <div class="circle b">B</div>
+      <div class="circle i">I</div>
+      <div class="circle n">N</div>
+      <div class="circle g">G</div>
+      <div class="circle o">O</div>
+    </div>
+
+    <div id="bingo-board"></div>
+  </div>
+
+  <button id="reset-btn">Nuevo juego</button>
+
+  <script>
+    const board = document.getElementById('bingo-board');
+    const selected = document.getElementById('selected');
+    const resetBtn = document.getElementById('reset-btn');
+
+    // Crear los 75 números
+    for (let i = 1; i <= 75; i++) {
+      const num = document.createElement('div');
+      num.classList.add('number');
+      num.textContent = i;
+      num.addEventListener('click', () => {
+        num.classList.toggle('marked');
+        selected.textContent = `Número actual: ${i}`;
+      });
+      board.appendChild(num);
+    }
+
+    // Reiniciar tablero
+    resetBtn.addEventListener('click', () => {
+      document.querySelectorAll('.number').forEach(n => n.classList.remove('marked'));
+      selected.textContent = 'Número actual: --';
+    });
+  </script>
+</body>
+</html>
